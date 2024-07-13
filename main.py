@@ -9,9 +9,9 @@ def homepage():
     return render_template("homepage.html")
 
 
-@app.route("/hello")
-def hello():
-    return render_template("hello.html")
+@app.route("/register")
+def register():
+    return render_template("register.html")
 
 
 if __name__ == "__main__":
