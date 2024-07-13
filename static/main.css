@@ -1,0 +1,15 @@
+h1 {
+    color: green !important;
+}
+
+.h1 {
+    color: yellow;
+}
+
+#h1 {
+    color: blue;
+}
+
+.class2 {
+    color: rgb(128, 0, 81);
+}
