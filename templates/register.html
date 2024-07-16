@@ -7,34 +7,34 @@
         <div class="offset-3 col-6 shadow border rounded p-3">
             <h2 class="text-center">New Registration</h2>
             <hr>
-            <form action="">
+            <form action="/register" method="post">
                 <div class="row mb-3">
                     <div class="col-6">
                         <label class="form-label" for="firstName">First Name</label>
-                        <input class="form-control" type="text" id="firstName">
+                        <input class="form-control" type="text" name="fname" id="firstName">
                     </div>
                     <div class="col-6">
                         <label class="form-label" for="lastName">Last Name</label>
-                        <input class="form-control" type="text" id="lastName">
+                        <input class="form-control" type="text" name="lname" id="lastName">
                     </div>
                 </div>
                 <div class="mb-3">
                     <label for="username" class="form-label">Username</label>
-                    <input type="text" class="form-control" id="username" placeholder="user123">
+                    <input type="text" class="form-control" name="username" id="username" placeholder="user123">
                 </div>
                 <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Email address</label>
-                    <input type="email" class="form-control" id="exampleFormControlInput1"
+                    <input type="email" class="form-control" name="email" id="exampleFormControlInput1"
                         placeholder="name@example.com">
                 </div>
                 <div class="row mb-3">
                     <div class="col-6">
                         <label class="form-label" for="password">Password</label>
-                        <input class="form-control" type="password" id="password">
+                        <input class="form-control" name="password" type="password" id="password">
                     </div>
                     <div class="col-6">
                         <label class="form-label" for="confirmPassword">Confirm Password</label>
-                        <input class="form-control" type="password" id="confirmPassword">
+                        <input class="form-control" name="cofirmPassword" type="password" id="confirmPassword">
                     </div>
                 </div>
                 <button class="btn btn-primary w-100" type="submit">Register</button>
