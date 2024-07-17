@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, url_for, redirect, flash
+from flask import Flask, request, render_template, url_for, redirect, flash, session
 from models import User
 from config import LocalConfig
 from db import db
@@ -12,7 +12,8 @@ db.init_app(app)
 # http://localhost:5000/
 @app.route("/")
 def homepage():
-    return render_template("homepage.html")
+    userdetails = {"username": session.get("username"), "role": session.get("role")}
+    return render_template("homepage.html", user=userdetails)
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -46,6 +47,41 @@ def register():
             db.session.commit()
 
         # return the response or redirect to login
+        return redirect(url_for("homepage"))
+
+
+def authenticate(user_password, password):
+    return user_password == password
+
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "GET":
+        return render_template("login.html")
+    elif request.method == "POST":
+        username = request.form.get("username")
+        password = request.form.get("password")
+        user = User.query.filter(username == username).first()
+        is_authenticated = authenticate(user.password, password)
+        if is_authenticated:
+            session["username"] = user.username
+            session["role"] = user.role
+            return redirect(url_for("homepage"))
+        else:
+            flash("Credintials do not match", "warning")
+            return redirect(url_for("login"))
+
+
+@app.route("/logout", methods=["GET", "POST"])
+def logout():
+    if request.method == "GET":
+        return render_template("logout.html")
+    elif request.method == "POST":
+        try:
+            session.pop("username")
+            session.pop("role")
+        except:
+            pass
         return redirect(url_for("homepage"))
 
 

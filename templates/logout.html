@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <h1>Do you really want to logout? </h1>
+    <div class="d-flex p-2">
+        <form class="mx-2" action="/logout" method="post">
+            <button class="btn btn-danger">Yes</button>
+        </form>
+        <a href="/" class="btn btn-secondary">Cancel</a>
+    </div>
+</div>
+{%endblock%}
