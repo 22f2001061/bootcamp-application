@@ -1,4 +1,4 @@
-from db import db
+from app.db import db
 
 
 class User(db.Model):
@@ -10,6 +10,13 @@ class User(db.Model):
     password = db.Column(db.String, nullable=False)
     email = db.Column(db.String, unique=True, nullable=False)
     role = db.Column(db.String)
+
+
+class Section(db.Model):
+    __tablename__ = "sections"
+    section_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    section_name = db.Column(db.String)
+    # books = db.relationship("Book", backref="books", lazy=True)
 
     # class Book(db.Model):
     #     __tablename__ = "books"
@@ -23,12 +30,6 @@ class User(db.Model):
     #     section_id = db.Column(
     #         db.Integer, db.ForeignKey("sections.section_id"), nullable=True
     #     )
-
-    # class Section(db.Model):
-    #     __tablename__ = "sections"
-    #     section_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    #     section_name = db.Column(db.String)
-    #     books = db.relationship("Book", backref="books", lazy=True)
 
     # class BookIssue(db.Model):
     #     __name__ = "book_issues"

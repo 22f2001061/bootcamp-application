@@ -10,7 +10,7 @@ class Config:
 
 
 class LocalConfig(Config):
-    SQLITE_DB_DIR = os.path.join(BASE_DIR, "db_directory")
+    SQLITE_DB_DIR = os.path.join(BASE_DIR, "../db_directory")
     SQLALCHEMY_DATABASE_URI = "sqlite:///" + os.path.join(SQLITE_DB_DIR, "project.db")
     DEBUG = True
 
