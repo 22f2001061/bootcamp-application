@@ -25,7 +25,7 @@ def register():
             pass_hash = generate_password_hash(password)
         else:
             flash("Confirm password should be same as Passord", "warning")
-            return redirect(url_for("register"))
+            return redirect(url_for("auth.register"))
         # make an entry into users table to create a new user
         if pass_hash:
             try:
