@@ -18,18 +18,19 @@ class Section(db.Model):
     section_name = db.Column(db.String)
     # books = db.relationship("Book", backref="books", lazy=True)
 
-    # class Book(db.Model):
-    #     __tablename__ = "books"
-    #     book_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    #     title = db.Column(db.String, nullable=False)
-    #     description = db.Column(db.String, nullable=True)
-    #     content = db.Column(db.String, nullable=False)
-    #     author = db.Column(db.String, nullable=False)
-    #     # pages
-    #     # thumbnail
-    #     section_id = db.Column(
-    #         db.Integer, db.ForeignKey("sections.section_id"), nullable=True
-    #     )
+
+class Book(db.Model):
+    __tablename__ = "books"
+    book_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    title = db.Column(db.String, nullable=False)
+    description = db.Column(db.String, nullable=True)
+    content = db.Column(db.String, nullable=False)
+    author = db.Column(db.String, nullable=False)
+    # pages
+    # thumbnail
+    section_id = db.Column(
+        db.Integer, db.ForeignKey("sections.section_id"), nullable=True
+    )
 
     # class BookIssue(db.Model):
     #     __name__ = "book_issues"

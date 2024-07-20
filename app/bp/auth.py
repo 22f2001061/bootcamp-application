@@ -12,7 +12,7 @@ bp = Blueprint("auth", __name__)
 @bp.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "GET":
-        return render_template("register.html")
+        return render_template("auth/register.html")
     elif request.method == "POST":
         # get the form data from request
         first_name = request.form.get("fname")
@@ -54,7 +54,7 @@ def authenticate(user_password, password):
 @bp.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "GET":
-        return render_template("login.html")
+        return render_template("auth/login.html")
     elif request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
@@ -72,7 +72,7 @@ def login():
 @bp.route("/logout", methods=["GET", "POST"])
 def logout():
     if request.method == "GET":
-        return render_template("logout.html")
+        return render_template("auth/logout.html")
     elif request.method == "POST":
         try:
             session.pop("username")
