@@ -6,6 +6,7 @@ from werkzeug.security import generate_password_hash
 
 from app.bp.auth import bp as auth_bp
 from app.bp.section import bp as section_bp
+from app.bp.book import bp as book_bp
 
 
 app = Flask(__name__)
@@ -33,6 +34,7 @@ def create_tables():
 
 app.register_blueprint(auth_bp)
 app.register_blueprint(section_bp)
+app.register_blueprint(book_bp)
 
 
 if __name__ == "__main__":

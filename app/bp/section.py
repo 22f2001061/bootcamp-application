@@ -1,6 +1,4 @@
 from flask import Blueprint, redirect, request, url_for, render_template, session, flash
-from werkzeug.security import generate_password_hash
-from sqlalchemy.orm.exc import UnmappedInstanceError
 
 from app.db import db
 from app.models import Section
@@ -29,7 +27,8 @@ def create_and_list_sections():
         new_section = Section(section_name=section_name)
         db.session.add(new_section)
         db.session.commit()
-        return redirect(url_for("section.create_and_list_sections"))
+        flash(f"Section with name: {section_name} created successfully", "success")
+        return redirect(url_for("section.list_sections"))
 
 
 @bp.route("/edit/sections/<section_id>", methods=["GET", "POST"])

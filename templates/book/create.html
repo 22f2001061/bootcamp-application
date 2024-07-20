@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row mt-5">
+        <div class="offset-4 col-4 shadow border rounded p-3">
+            <h2 class="text-center">Create Book</h2>
+            <hr>
+            <form action="/books" method="post">
+                <div class="mb-3">
+                    <label for="bookTitle" class="form-label">Book Title</label>
+                    <input type="text" class="form-control" name="bookTitle" id="bookTitle" placeholder="Book 1 title">
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <input type="text" class="form-control" name="description" id="description"
+                        placeholder="Book description">
+                </div>
+                <div class="mb-3">
+                    <label for="bookContent" class="form-label">Book Content</label>
+                    <input type="text" class="form-control" name="bookContent" id="bookContent"
+                        placeholder="Book Content">
+                </div>
+                <div class="mb-3">
+                    <label for="authorName" class="form-label">Author Name</label>
+                    <input type="text" class="form-control" name="authorName" id="authorName" placeholder="Author 1">
+                </div>
+                <div class="mb-3">
+                    <label for="sectionName" class="form-label">Select Section</label>
+                    <select type="text" class="form-control" name="sectionName" id="sectionName" placeholder="Author 1">
+                        {% for section in available_sections %}
+                        <option value="{{section.section_id}}">{{section.section_name}}</option>
+                        {%endfor%}
+                    </select>
+                </div>
+                <button class="btn btn-primary w-100" type="submit">Add Book</button>
+            </form>
+        </div>
+    </div>
+
+</div>
+{%endblock%}

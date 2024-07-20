@@ -1,67 +1,66 @@
 from flask import Blueprint, redirect, request, url_for, render_template, session, flash
-from werkzeug.security import generate_password_hash
-from sqlalchemy.orm.exc import UnmappedInstanceError
 
 from app.db import db
-from app.models import Book
+from app.models import Book, Section
 
 
 bp = Blueprint(
-    "section",
+    "book",
     __name__,
 )
 
 
-# CRUD
-# base/sections -> list of all the sections
-@bp.route("/sections")
-def list_sections():
+# CRUD on Books
+# base/books -> list of all the books
+@bp.route("/books")
+def list_books():
+    books = Book.query.all()
+    return render_template("book/list.html", books=books)
+
+
+@bp.route("/create/books", methods=["GET", "POST"])
+def create_and_list_books():
     sections = Section.query.all()
-    return render_template("section_list.html", sections=sections)
-
-
-@bp.route("/create/sections", methods=["GET", "POST"])
-def create_and_list_sections():
     if request.method == "GET":
-        return render_template("create_section.html")
+        return render_template("book/create.html", available_sections=sections)
     elif request.method == "POST":
-        section_name = request.form.get("sectionName")
-        new_section = Section(section_name=section_name)
-        db.session.add(new_section)
+        book_name = request.form.get("bookName")
+        new_book = Book(book_name=book_name)
+        db.session.add(new_book)
         db.session.commit()
-        return redirect(url_for("section.create_and_list_sections"))
+        return redirect(url_for("book.create_and_list_books"))
 
 
-@bp.route("/edit/sections/<section_id>", methods=["GET", "POST"])
-def edit_section(section_id):
-    section = Section.query.filter_by(section_id=section_id).first()
+@bp.route("/edit/books/<book_id>", methods=["GET", "POST"])
+def edit_book(book_id):
+    book = Book.query.filter_by(book_id=book_id).first()
     if request.method == "GET":
-        return render_template("edit_section.html", section=section)
+        return render_template("edit_book.html", book=book)
     if request.method == "POST":
         # handle edit operation.
-        section_name = request.form.get("sectionName")
-        section.section_name = section_name
-        db.session.add(section)
+        book_name = request.form.get("bookName")
+        book.book_name = book_name
+        db.session.add(book)
         db.session.commit()
-        flash(f"Section with id: {section.section_id} is edited successfully!", "info")
-        return redirect(url_for("section.list_sections"))
+        flash(f"Book with id: {book.book_id} is edited successfully!", "info")
+        return redirect(url_for("book.list_books"))
 
 
-@bp.route("/delete/sections/<section_id>", methods=["GET", "POST"])
-def delete_section(section_id):
-    section = Section.query.filter_by(section_id=section_id).first()
+@bp.route("/delete/books/<book_id>", methods=["GET", "POST"])
+def delete_book(book_id):
+    book = Book.query.filter_by(book_id=book_id).first()
     if request.method == "GET":
-        return render_template("confirm_delete.html", section=section)
+        return render_template("confirm_delete.html", book=book)
     if request.method == "POST":
         # handle edit operation.
-        if section:
-            db.session.delete(section)
+        if book:
+            db.session.delete(book)
             db.session.commit()
             flash(
-                f"Section with id: {section.section_id} is deleted successfully!",
+                f"Book with id: {book.book_id} is deleted successfully!",
                 "success",
             )
         else:
-            flash(f"Section with id: {section_id} is does not exit!", "warning")
+            flash(f"Book with id: {book_id} is does not exit!", "warning")
 
-        return redirect(url_for("section.list_sections"))
+        return redirect(url_for("book.list_books"))
