@@ -1,5 +1,5 @@
 from flask import Blueprint, redirect, request, url_for, render_template, session, flash
-from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.exc import IntegrityError
 
 from app.db import db
@@ -48,7 +48,7 @@ def register():
 
 
 def authenticate(user_password, password):
-    return user_password == password
+    return check_password_hash(user_password, password)
 
 
 @bp.route("/login", methods=["GET", "POST"])
@@ -58,9 +58,10 @@ def login():
     elif request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
-        user = User.query.filter(username == username).first()
+        user = User.query.filter_by(username=username).first()
         is_authenticated = authenticate(user.password, password)
         if is_authenticated:
+            session["user_id"] = user.user_id
             session["username"] = user.username
             session["role"] = user.role
             return redirect(url_for("homepage"))
@@ -75,6 +76,7 @@ def logout():
         return render_template("auth/logout.html")
     elif request.method == "POST":
         try:
+            session.pop("user_id")
             session.pop("username")
             session.pop("role")
         except:

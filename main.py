@@ -7,6 +7,7 @@ from werkzeug.security import generate_password_hash
 from app.bp.auth import bp as auth_bp
 from app.bp.section import bp as section_bp
 from app.bp.book import bp as book_bp
+from app.bp.book_issue import bp as book_issue_bp
 
 
 app = Flask(__name__)
@@ -17,7 +18,11 @@ db.init_app(app)
 # http://localhost:5000/
 @app.route("/")
 def homepage():
-    userdetails = {"username": session.get("username"), "role": session.get("role")}
+    userdetails = {
+        "user_id": session.get("user_id"),
+        "username": session.get("username"),
+        "role": session.get("role"),
+    }
     return render_template("homepage.html", user=userdetails)
 
 
@@ -35,6 +40,7 @@ def create_tables():
 app.register_blueprint(auth_bp)
 app.register_blueprint(section_bp)
 app.register_blueprint(book_bp)
+app.register_blueprint(book_issue_bp)
 
 
 if __name__ == "__main__":
