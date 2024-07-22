@@ -24,25 +24,45 @@ def create_and_list_books():
     if request.method == "GET":
         return render_template("book/create.html", available_sections=sections)
     elif request.method == "POST":
-        book_name = request.form.get("bookName")
-        new_book = Book(book_name=book_name)
+        title = request.form.get("bookTitle")
+        description = request.form.get("description")
+        book_content = request.form.get("bookContent")
+        author_name = request.form.get("authorName")
+        section_id = request.form.get("sectionId")
+
+        new_book = Book(
+            title=title,
+            description=description,
+            content=book_content,
+            author=author_name,
+            section_id=section_id,
+        )
         db.session.add(new_book)
         db.session.commit()
-        return redirect(url_for("book.create_and_list_books"))
+        flash(f"New book with title: {title} is created!", "success")
+        return redirect(url_for("book.list_books"))
 
 
 @bp.route("/edit/books/<book_id>", methods=["GET", "POST"])
 def edit_book(book_id):
     book = Book.query.filter_by(book_id=book_id).first()
     if request.method == "GET":
-        return render_template("edit_book.html", book=book)
+        sections = Section.query.all()
+        return render_template("book/edit.html", book=book, available_sections=sections)
     if request.method == "POST":
-        # handle edit operation.
-        book_name = request.form.get("bookName")
-        book.book_name = book_name
+        title = request.form.get("bookTitle")
+        description = request.form.get("description")
+        book_content = request.form.get("bookContent")
+        author_name = request.form.get("authorName")
+        section_id = request.form.get("sectionId")
+        book.title = title
+        book.description = description
+        book.content = book_content
+        book.author = author_name
+        book.section_id = section_id
         db.session.add(book)
         db.session.commit()
-        flash(f"Book with id: {book.book_id} is edited successfully!", "info")
+        flash(f"Book with title: {title} is edited successfully!", "info")
         return redirect(url_for("book.list_books"))
 
 
@@ -50,7 +70,7 @@ def edit_book(book_id):
 def delete_book(book_id):
     book = Book.query.filter_by(book_id=book_id).first()
     if request.method == "GET":
-        return render_template("confirm_delete.html", book=book)
+        return render_template("book/confirm_delete.html", book=book)
     if request.method == "POST":
         # handle edit operation.
         if book:

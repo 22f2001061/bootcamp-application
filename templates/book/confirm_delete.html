@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row mt-5">
+        <div class="offset-4 col-4 shadow border rounded p-3">
+            <h2 class="text-center">Confirm Delete Book for {{book.title}}</h2>
+            <hr>
+            <form action="/delete/books/{{book.book_id}}" class="d-flex justify-content-evenly" method="post">
+                <div>
+                    <button class="btn btn-danger" type="submit">Delete Book</button>
+                </div>
+                <div>
+                    <a href="/books" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+{%endblock%}

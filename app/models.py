@@ -32,15 +32,16 @@ class Book(db.Model):
         db.Integer, db.ForeignKey("sections.section_id"), nullable=True
     )
 
-    # class BookIssue(db.Model):
-    #     __name__ = "book_issues"
-    #     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    #     book_id = db.Column(db.Integer, db.ForeignKey("books.book_id"), nullable=False)
-    #     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
-    #     date_issued = db.Column(db.Date, nullable=True)
-    #     date_returned = db.Column(db.Date, nullable=True)
-    #     is_revoked = db.Column(db.Boolean, default=False)
-    #     request_accepted = db.Column(db.Boolean, default=False)
+
+class BookIssue(db.Model):
+    __name__ = "book_issues"
+    id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    book_id = db.Column(db.Integer, db.ForeignKey("books.book_id"), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
+    date_issued = db.Column(db.Date, nullable=True)
+    date_returned = db.Column(db.Date, nullable=True)
+    is_revoked = db.Column(db.Boolean, default=False)
+    request_accepted = db.Column(db.Boolean, default=False)
 
     # class BaseUser(db.Model):
     #     # id
