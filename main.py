@@ -42,6 +42,20 @@ app.register_blueprint(section_bp)
 app.register_blueprint(book_bp)
 app.register_blueprint(book_issue_bp)
 
+from flask_restful import Resource, Api
+
+api = Api(app)
+
+
+class HelloWorld(Resource):
+    def get(self):
+        return {"hello": "world"}
+
+    def post(self):
+        return {"post": "request"}
+
+
+api.add_resource(HelloWorld, "/api/v1/")
 
 if __name__ == "__main__":
     app.run()

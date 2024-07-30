@@ -3,7 +3,9 @@ from flask import Blueprint, redirect, request, url_for, render_template, sessio
 from app.db import db
 from app.models import Book, Section
 from app.utils import login_required
+from sqlalchemy import or_
 
+import json
 
 bp = Blueprint(
     "book",
@@ -15,7 +17,18 @@ bp = Blueprint(
 # base/books -> list of all the books
 @bp.route("/books")
 def list_books():
+    query = request.args.get("q")
     books = Book.query.all()
+    if query:
+        query = f"%{query}%"
+        books = Book.query.filter(
+            or_(
+                Book.title.like(query),
+                Book.author.ilike(query),
+                Book.description.ilike(query),
+            )
+        ).all()
+    # return {"title": books[0].title, "author": books[0].author}
     return render_template("book/list.html", books=books)
 
 

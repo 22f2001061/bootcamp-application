@@ -17,7 +17,8 @@ class Section(db.Model):
     __tablename__ = "sections"
     section_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     section_name = db.Column(db.String)
-    # books = db.relationship("Book", backref="books", lazy=True)
+
+    # books = db.relationship("Book", back_populates="section", lazy=True)
 
 
 class Book(db.Model):

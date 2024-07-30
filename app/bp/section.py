@@ -71,7 +71,11 @@ def delete_section(section_id):
 
 
 # Listing -> /sections (GET request)
+
 # Create -> /sections (POST request)
+
 # Retrieve -> /sections/<section_id>(GET)
+
 # Update -> /sections/<section_id> (PUT)
+
 # Delete -> /sections/<section_id> (DELETE)
