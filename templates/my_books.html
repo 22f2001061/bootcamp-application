@@ -3,4 +3,35 @@
 {% block content %}
 <h1>Current users book request list and approved list</h1>
 
+<table class="table">
+    <th>
+        <tr>
+            <td>Book Id</td>
+            <td>User Id </td>
+            <td>Date Requested</td>
+            <td>Action</td>
+        </tr>
+    </th>
+    <tbody>
+        {% for book in my_books %}
+        <tr>
+            <td>
+                {{ book.book_id }}
+            </td>
+            <td>
+                {{book.user_id}}
+            </td>
+            <td>
+                {{ book.date_requested}}
+            </td>
+            {%if session.get('role') == 'student' %}
+            <td>status</td>
+            {%else %}
+            <td>Accept | Reject </td>
+            {%endif%}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
 {%endblock%}

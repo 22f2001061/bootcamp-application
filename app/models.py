@@ -1,4 +1,5 @@
 from app.db import db
+from datetime import time, datetime
 
 
 class User(db.Model):
@@ -38,53 +39,9 @@ class BookIssue(db.Model):
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     book_id = db.Column(db.Integer, db.ForeignKey("books.book_id"), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
+    date_requested = db.Column(db.Date, default=datetime.now())
     date_issued = db.Column(db.Date, nullable=True)
     date_returned = db.Column(db.Date, nullable=True)
-    is_revoked = db.Column(db.Boolean, default=False)
-    request_accepted = db.Column(db.Boolean, default=False)
-
-    # class BaseUser(db.Model):
-    #     # id
-    #     # username
-    #     # password
-    #     # email
-    #     # role
-    #     pass
-
-    # class InfluencerDetails(db.Model):
-    # id
-    #   user_id = foreignkey(user.user_id)
-    #   url
-    # platform_name
-    # number of following
-    ...
-
-    #     # yturl
-    #     # insta
-    #     # ...
-    #     pass
-
-    # class SponsorDetails(db.Model):
-    #     # id
-    #     # username
-    #  industry name
-    #     # yturl
-    #     # insta
-    #     # ...
-    #     pass
-
-    # class Campaign():
-    id
-    # name
-    # description
-    # useri_id
-    # status
-    # budget
-
-
-# class CampaignRequest():
-# user_id
-# campaign_id
-# is_approved
-# request_from
-# request_to
+    status = db.Column(
+        db.String, default="pending"
+    )  # accepted, rejected, pending, revoked, returned

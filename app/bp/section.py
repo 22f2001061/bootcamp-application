@@ -2,6 +2,7 @@ from flask import Blueprint, redirect, request, url_for, render_template, sessio
 
 from app.db import db
 from app.models import Section
+from app.utils import login_required
 
 
 bp = Blueprint(
@@ -19,6 +20,7 @@ def list_sections():
 
 
 @bp.route("/create/sections", methods=["GET", "POST"])
+@login_required("admin")
 def create_and_list_sections():
     if request.method == "GET":
         return render_template("section/create_section.html")
@@ -32,6 +34,7 @@ def create_and_list_sections():
 
 
 @bp.route("/edit/sections/<section_id>", methods=["GET", "POST"])
+@login_required("admin")
 def edit_section(section_id):
     section = Section.query.filter_by(section_id=section_id).first()
     if request.method == "GET":
@@ -47,6 +50,7 @@ def edit_section(section_id):
 
 
 @bp.route("/delete/sections/<section_id>", methods=["GET", "POST"])
+@login_required("admin")
 def delete_section(section_id):
     section = Section.query.filter_by(section_id=section_id).first()
     if request.method == "GET":

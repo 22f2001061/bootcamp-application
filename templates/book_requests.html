@@ -3,4 +3,90 @@
 {% block content %}
 <h1>All book requests with admin access</h1>
 
+<table class="table">
+    <th>
+        <tr>
+            <td>Book Id</td>
+            <td>User Id </td>
+            <td>Date Requested</td>
+            <td>Action</td>
+        </tr>
+    </th>
+    <tbody>
+        {% for book in book_requests %}
+        {% if book.status == 'pending' %}
+
+        <tr>
+            <td>
+                {{ book.book_id }}
+            </td>
+            <td>
+                {{book.user_id}}
+            </td>
+            <td>
+                {{ book.date_requested}}
+            </td>
+            {%if session.get('role') == 'student' %}
+            <td>status</td>
+            {%else %}
+            <td>
+                <div class="d-flex">
+                    <form action="/book-requests/accept/{{book.id}}" method="post">
+                        <button type="submit" class="btn btn-sm btn-success">Accept</button>
+                    </form>
+                    <form action="/book-requests/reject/{{book.id}}" method="post">
+                        <button type="submit" class="btn btn-sm btn-danger">Reject</button>
+                    </form>
+                </div>
+
+            </td>
+            {%endif%}
+        </tr>
+        {% endif %}
+        {% endfor %}
+    </tbody>
+</table>
+<h1>Issued Book Requests</h1>
+
+<table class="table">
+    <th>
+        <tr>
+            <td>Book Id</td>
+            <td>User Id </td>
+            <td>Date Requested</td>
+            <td>Action</td>
+        </tr>
+    </th>
+    <tbody>
+        {% for book in book_requests %}
+        {% if book.status == 'accepted'%}
+
+        <tr>
+            <td>
+                {{ book.book_id }}
+            </td>
+            <td>
+                {{book.user_id}}
+            </td>
+            <td>
+                {{ book.date_requested}}
+            </td>
+            {%if session.get('role') == 'student' %}
+            <td>status</td>
+            {%else %}
+            <td>
+                <div class="d-flex">
+                    <form action="/book-request/revoke/{{book.id}}" method="post">
+                        <button type="submit" class="btn btn-sm btn-danger">Revoke</button>
+                    </form>
+                </div>
+
+            </td>
+            {%endif%}
+        </tr>
+        {% endif %}
+        {% endfor %}
+    </tbody>
+</table>
+
 {%endblock%}

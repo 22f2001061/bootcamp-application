@@ -2,6 +2,7 @@ from flask import Blueprint, redirect, request, url_for, render_template, sessio
 
 from app.db import db
 from app.models import Book, Section
+from app.utils import login_required
 
 
 bp = Blueprint(
@@ -19,6 +20,7 @@ def list_books():
 
 
 @bp.route("/create/books", methods=["GET", "POST"])
+@login_required("admin")
 def create_and_list_books():
     sections = Section.query.all()
     if request.method == "GET":
@@ -44,6 +46,7 @@ def create_and_list_books():
 
 
 @bp.route("/edit/books/<book_id>", methods=["GET", "POST"])
+@login_required("admin")
 def edit_book(book_id):
     book = Book.query.filter_by(book_id=book_id).first()
     if request.method == "GET":
@@ -67,6 +70,7 @@ def edit_book(book_id):
 
 
 @bp.route("/delete/books/<book_id>", methods=["GET", "POST"])
+@login_required("admin")
 def delete_book(book_id):
     book = Book.query.filter_by(book_id=book_id).first()
     if request.method == "GET":
