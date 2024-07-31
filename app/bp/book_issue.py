@@ -63,3 +63,23 @@ def my_books():
     my_books = BookIssue.query.filter(BookIssue.user_id == user_id).all()
 
     return render_template("my_books.html", my_books=my_books)
+
+
+# def generate_bar_chart():
+#     # Sample data
+#     categories = ['Books Borrowed', 'Books Returned', 'New Members', 'Active Members']
+#     values = [random.randint(50, 150) for _ in categories]
+
+#     # Create a bar chart
+#     plt.figure(figsize=(10, 6))
+#     plt.bar(categories, values, color='skyblue')
+#     plt.xlabel('Categories')
+#     plt.ylabel('Values')
+#     plt.title('Library Statistics')
+
+#     # Save the plot to a BytesIO object
+#     img = io.BytesIO()
+#     plt.savefig(img, format='png')
+#     img.seek(0)  # Rewind the data
+
+#     return img
